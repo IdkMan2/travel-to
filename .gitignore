@@ -12,10 +12,15 @@
 
 # dependencies
 /node_modules
-/.pnp
-.pnp.js
 
-# debug & errors
-npm-debug.log*
+# yarn
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+
+# debug & logs
 yarn-debug.log*
 yarn-error.log*
+npm-debug.log*
