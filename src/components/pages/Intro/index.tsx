@@ -1,10 +1,11 @@
 import React, {memo} from 'react';
+import {Typography} from '@material-ui/core';
 
 function Intro() {
 
   return (
     <div>
-      Intro
+      <Typography variant={'h2'}>Intro</Typography>
     </div>
   );
 }

@@ -1,10 +1,11 @@
 import React, {memo} from 'react';
+import {Typography} from '@material-ui/core';
 
 function Home() {
 
   return (
     <div>
-      Home
+      <Typography variant={'h2'}>Home</Typography>
     </div>
   );
 }
