@@ -1,12 +1,10 @@
 import React, {memo} from 'react';
-import {Typography} from '@material-ui/core';
+import PromoVideo from "../../organisms/PromoVideo";
 
 function Intro() {
 
   return (
-    <div>
-      <Typography variant={'h2'}>Intro</Typography>
-    </div>
+    <PromoVideo />
   );
 }
 

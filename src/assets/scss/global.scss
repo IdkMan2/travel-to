@@ -2,6 +2,6 @@ body {
   color: rgba(0, 0, 0, 0.87);
 
   @media (prefers-color-scheme: dark) {
-    color: #FFFFFF;
+    color: #FFFFFF !important;
   }
 }
