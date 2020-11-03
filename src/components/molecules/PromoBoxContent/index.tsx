@@ -1,4 +1,5 @@
 import React, {ComponentProps, memo} from "react";
+import {LinkProps as RouterLinkProps} from "react-router-dom";
 import {createStyles, Theme, TypographyProps} from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
@@ -10,7 +11,7 @@ export interface IPromoBoxContentProps {
   buttonTitle: string;
   classes?: Partial<ReturnType<typeof useStyles>>;
   TypographyProps?: ComponentProps<typeof Typography>;
-  XLargeButtonProps?: ComponentProps<typeof XLargeButton>;
+  XLargeButtonProps?: Omit<ComponentProps<typeof XLargeButton>, 'to'> & Partial<Pick<RouterLinkProps, 'to'>>;
 }
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -59,8 +60,8 @@ function PromoBoxContent(props: IPromoBoxContentProps) {
       ))}
 
       <XLargeButton
-        variant={"contained"}
         className={classes.heroBtn}
+        to={'/register'}
         {...XLargeButtonProps}
       >
         {buttonTitle}

@@ -47,6 +47,9 @@ function PromoSection() {
               classes={{
                 root: classes.videoBoxContent_root
               }}
+              XLargeButtonProps={{
+                href: '/register'
+              }}
             />
           </VideoBox>
         )
