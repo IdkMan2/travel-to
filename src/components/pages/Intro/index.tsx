@@ -1,10 +1,10 @@
 import React, {memo} from 'react';
-import PromoVideo from "../../organisms/PromoVideo";
+import PromoSection from "../../organisms/PromoSection";
 
 function Intro() {
 
   return (
-    <PromoVideo />
+    <PromoSection />
   );
 }
 

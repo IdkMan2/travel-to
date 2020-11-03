@@ -1,7 +1,9 @@
 body {
   color: rgba(0, 0, 0, 0.87);
+  background-color: #fafafa;
 
   @media (prefers-color-scheme: dark) {
     color: #FFFFFF !important;
+    background-color: #303030 !important;
   }
 }

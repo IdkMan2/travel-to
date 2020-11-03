@@ -2,10 +2,10 @@ import React, {MediaHTMLAttributes, memo, ReactNode, SourceHTMLAttributes} from 
 import {createStyles, Theme} from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
-export interface VideoBoxProps {
+export interface IVideoBoxProps {
   source?: string;
   classes?: Partial<ReturnType<typeof useStyles>>;
-  children?: ReactNode,
+  children?: ReactNode;
   VideoProps?: MediaHTMLAttributes<HTMLVideoElement>;
   SourceProps?: SourceHTMLAttributes<HTMLSourceElement>;
 }
@@ -42,22 +42,24 @@ const useStyles = makeStyles((_theme: Theme) => createStyles({
   },
 }));
 
-function VideoBox(props: VideoBoxProps) {
-  const {source, children} = props;
-  let {classes, SourceProps, VideoProps} = props;
+function VideoBox(props: IVideoBoxProps) {
+  const {source, children, SourceProps, VideoProps} = props;
+  let {classes} = props;
 
   classes = { ...useStyles(), ...classes };
 
-  VideoProps = {
-    autoPlay: true, muted: true, loop: true,
-    className: classes.video, ...VideoProps
-  };
-  SourceProps = { src: source, type: 'video/mp4', ...SourceProps };
-
   return (
     <header className={classes.root}>
-      <video {...VideoProps} >
-        <source {...SourceProps} />
+      <video
+        autoPlay muted loop
+        className={classes.video}
+        {...VideoProps}
+      >
+        <source
+          src={source}
+          type={'video/mp4'}
+          {...SourceProps}
+        />
         Your browser does not support HTML5 video.
       </video>
 

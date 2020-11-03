@@ -1,11 +1,11 @@
 import React, {ComponentProps, memo} from "react";
-import {createStyles, Theme} from "@material-ui/core";
+import {createStyles, Theme, TypographyProps} from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import XLargeButton from "../../atoms/XLargeButton";
 
-export interface VideoBoxContentProps {
+export interface IPromoBoxContentProps {
   title: string | string[];
   buttonTitle: string;
   classes?: Partial<ReturnType<typeof useStyles>>;
@@ -14,9 +14,7 @@ export interface VideoBoxContentProps {
 }
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
-  root: {
-    marginLeft: '7.5%',
-  },
+  root: {},
   heroText: {
     fontFamily: `'Anton', sans-serif`,
     color: theme.palette.getContrastText('#000000'),
@@ -28,12 +26,22 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
 }));
 
-function VideoBoxContent(props: VideoBoxContentProps) {
+function PromoBoxContent(props: IPromoBoxContentProps) {
   const {title, buttonTitle, XLargeButtonProps, TypographyProps} = props;
   let {classes} = props;
-  const mediaXLAndUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('xl'));
 
   classes = { ...useStyles(), ...classes };
+
+  const isMediaMdAndUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
+  const isMediaXLAndUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('xl'));
+
+  let typographyVariant: TypographyProps['variant'];
+  if(isMediaXLAndUp)
+    typographyVariant = 'h1';
+  else if(isMediaMdAndUp)
+    typographyVariant = 'h2';
+  else
+    typographyVariant = 'h3';
 
   const titleElements = Array.isArray(title) ? title : [title];
 
@@ -41,7 +49,7 @@ function VideoBoxContent(props: VideoBoxContentProps) {
     <div className={classes.root}>
       {titleElements.map((titleElement: string, index: number) => (
         <Typography
-          variant={mediaXLAndUp ? 'h1' : 'h2'}
+          variant={typographyVariant}
           className={classes?.heroText}
           key={index}
           {...TypographyProps}
@@ -61,4 +69,4 @@ function VideoBoxContent(props: VideoBoxContentProps) {
   );
 }
 
-export default memo(VideoBoxContent);
+export default memo(PromoBoxContent);
