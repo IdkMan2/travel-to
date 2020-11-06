@@ -1,12 +1,12 @@
-import React, {memo} from "react";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import {createStyles, Theme} from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import VideoBox from "../../molecules/VideoBox";
-import PromoBoxContent from "../../molecules/PromoBoxContent";
-import PostcardBox from "../../molecules/PostcardBox";
-import promoVideo from "../../../assets/video/promo-video.mp4";
-import promoPostcard from '../../../assets/png/promo-postcard.png';
+import React, {memo} from 'react';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import {createStyles, Theme} from '@material-ui/core';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import VideoBox from '../../molecules/VideoBox';
+import PromoBoxContent from '../../molecules/PromoBoxContent';
+import PostcardBox from '../../molecules/PostcardBox';
+import promoVideo from '../../../assets/video/promo-video.mp4';
+import promoPostcard from '../../../assets/images/png/promo-postcard.png';
 
 const useStyles = makeStyles((_theme: Theme) => createStyles({
   root: {

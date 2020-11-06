@@ -1,6 +1,6 @@
-import React, {MediaHTMLAttributes, memo, ReactNode, SourceHTMLAttributes} from "react";
-import {createStyles, Theme} from "@material-ui/core";
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import React, {MediaHTMLAttributes, memo, ReactNode, SourceHTMLAttributes} from 'react';
+import {createStyles, Theme} from '@material-ui/core';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 export interface IVideoBoxProps {
   source?: string;

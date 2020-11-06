@@ -1,6 +1,6 @@
-import React, {memo, ReactNode, ImgHTMLAttributes} from "react";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import {createStyles, Theme} from "@material-ui/core";
+import React, {memo, ReactNode, ImgHTMLAttributes} from 'react';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import {createStyles, Theme} from '@material-ui/core';
 
 export interface IPostcardBoxProps {
   source?: string;

@@ -1,5 +1,5 @@
 import React, {memo} from 'react';
-import PromoSection from "../../organisms/PromoSection";
+import PromoSection from '../../organisms/PromoSection';
 
 function Intro() {
 

@@ -1,10 +1,10 @@
-import React, {ComponentProps, memo} from "react";
-import {LinkProps as RouterLinkProps} from "react-router-dom";
-import {createStyles, Theme, TypographyProps} from "@material-ui/core";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import Typography from "@material-ui/core/Typography";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import XLargeButton from "../../atoms/XLargeButton";
+import React, {ComponentProps, memo} from 'react';
+import {LinkProps as RouterLinkProps} from 'react-router-dom';
+import {createStyles, Theme, TypographyProps} from '@material-ui/core';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import Typography from '@material-ui/core/Typography';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import XLargeButton from '../../atoms/XLargeButton';
 
 export interface IPromoBoxContentProps {
   title: string | string[];

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Redirect, Route, RouteProps } from "react-router-dom";
+import {Redirect, Route, RouteProps } from 'react-router-dom';
 
 export interface IUnauthorizedOnlyRouteProps extends RouteProps {
   isUserAuthorized: boolean;
