@@ -1,32 +1,55 @@
-{
+{ // https://paulintrognon.fr/blog/post/typescript-prettier-eslint-next-js
+  "root": true,
+  "parser": "@typescript-eslint/parser", // will allow ESLint to parse TypeScript files.
+  "parserOptions": {
+    "ecmaVersion": 2018, // Allows for the parsing of modern ECMAScript features
+    "sourceType": "module", // Allows for the use of imports
+    "ecmaFeatures": {
+      "jsx": true // Allows for the parsing of JSX
+    }
+  },
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect" // Tells eslint-plugin-react to automatically detect the version of React to use
+    }
+  },
   "extends": [
     "react-app"
   ],
+  "plugins": [
+    "prettier", "simple-import-sort"
+  ],
   "rules": {
-    "no-console": [
-      "warn",
+    "prettier/prettier": ["warn"], // Fix for prettier & eslint - by defailt it throws erros instead of warns
+    "simple-import-sort/sort": "warn", // rule from plugin 'simple-import-sort'
+    "sort-imports": "off", // rule turned off to not conflict with 'simple-import-sort/sort'
+    "import/order": "off", // rule turned off to not conflict with 'simple-import-sort/sort'
+    "no-console": [ "warn", {"allow": ["warn", "error"]} ], // doesn't allow us to write console.log(...)
+    "react/prop-types": "off", // we are not even using this
+    "react/react-in-jsx-scope": "off", // something that must be for next.js development
+    "jsx-a11y/anchor-is-valid": [ // same as above ^
+      "error",
       {
-        "allow": [
-          "warn",
-          "error"
-        ]
+        "components": ["Link"],
+        "specialLink": ["hrefLeft", "hrefRight"],
+        "aspects": ["invalidHref", "preferButton"]
       }
-    ],
-    "no-extra-boolean-cast": "warn"
+    ]
   },
   "overrides": [
     {
-      "files": [
-        "**/*.ts?(x)"
-      ],
+      "files": [ "**/*.ts?(x)" ],
       "rules": {
-        "@typescript-eslint/no-unused-vars": [
-          "warn",
-          {
-            "argsIgnorePattern": "^_"
-          }
+        "@typescript-eslint/no-unused-vars": [ // make an exception for vars starting with '_"
+          "warn", {"argsIgnorePattern": "^_"}
         ],
-        "@typescript-eslint/naming-convention": [
+        "@typescript-eslint/naming-convention": [ // force consistent interface naming convention
           "warn",
           {
             "selector": "interface",
@@ -38,8 +61,12 @@
               "match": true
             }
           }
-        ]
+        ],
+        "@typescript-eslint/explicit-module-boundary-types": "off" // turn off explicit return-types for functions
       }
     }
+  ],
+  "ignorePatterns": [
+    "next.config.js"
   ]
 }

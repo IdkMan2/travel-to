@@ -1,0 +1,10 @@
+node_modules
+dist
+.next
+package.json
+yarn.lock
+package-lock.json
+tsconfig.json
+next.config.js
+.eslintrc.json
+next-env.d.ts
