@@ -4,41 +4,58 @@
   "private": true,
   "repository": "https://github.com/IdkMan2/travel-to.git",
   "author": "Arek N <nowyarek@gmail.com>",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "type-check": "tsc",
+    "lint": "eslint --quiet --fix '**/*.{ts,tsx}'",
+    "format": "prettier --write '**/*.{ts,tsx}'"
+  },
   "dependencies": {
-    "@emotion/core": "^10.0.35",
-    "@emotion/styled": "^10.0.27",
-    "@material-ui/core": "^5.0.0-alpha.14",
-    "@material-ui/icons": "^5.0.0-alpha.15",
-    "classnames": "^2.2.6",
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
     "formik": "^2.2.1",
-    "node-sass": "^4.14.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.0",
+    "next": "10.0.1",
+    "react": "16.14.0",
+    "react-dom": "^16.14.0",
     "yup": "^0.29.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "@next/bundle-analyzer": "^10.0.1",
     "@types/classnames": "^2.2.11",
-    "@types/node": "^12.0.0",
-    "@types/react": "^16.9.53",
+    "@types/node": "^14.14.6",
+    "@types/react": "^16.9.55",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.6",
     "@types/yup": "^0.29.9",
+    "@typescript-eslint/eslint-plugin": "^4.0.0",
+    "@typescript-eslint/parser": "^4.0.0",
+    "babel-eslint": "^10.0.0",
+    "eslint": "^7.5.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-react-app": "^6.0.0",
+    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
+    "eslint-webpack-plugin": "^2.2.0",
     "husky": "^4.3.0",
+    "install": "^0.13.0",
+    "lint-staged": "^10.5.1",
+    "prettier": "^2.1.2",
+    "sass": "^1.29.0",
     "typescript": "^4.0.5"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
     }
   },
   "commitlint": {
@@ -46,11 +63,20 @@
       "@commitlint/config-conventional"
     ]
   },
+  "lint-staged": {
+    "**/*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "not IE 11",
+      "not IE_Mob 11",
+      "maintained node versions"
     ],
     "development": [
       "last 1 chrome version",

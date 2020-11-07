@@ -1,43 +1,42 @@
-import React, {memo} from 'react';
-import {Link as RouterLink, LinkProps as RouterLinkProps} from 'react-router-dom';
-import makeStyles from '@material-ui/core/styles/makeStyles';
 import {ButtonProps, createStyles, Theme} from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import React, {ForwardedRef, forwardRef, memo} from 'react';
 
-export type IXLargeButtonProps = Omit<ButtonProps, 'classes'>
-  & RouterLinkProps
-  & {
-    classes?: Partial<ReturnType<typeof useStyles>>;
-  }
+export type IXLargeButtonProps = Omit<ButtonProps, 'classes'> & {
+  classes?: Partial<ReturnType<typeof useStyles>>;
+};
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  button_root: {
-    borderWidth: 3,
-    '&:hover': {
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button_root: {
       borderWidth: 3,
-    }
-  },
-  button_label: {
-    ...theme.typography.h4,
-  },
-  [theme.breakpoints.up('md')]: {
-    button_root: {
-      padding: theme.spacing(1, 6),
-    },
-  },
-  [theme.breakpoints.up('xl')]: {
-    button_root: {
-      padding: theme.spacing(1.5, 10),
+      '&:hover': {
+        borderWidth: 3,
+      },
     },
     button_label: {
-      ...theme.typography.h3,
+      ...theme.typography.h4,
     },
-  }
-}));
+    [theme.breakpoints.up('md')]: {
+      button_root: {
+        padding: theme.spacing(1, 6),
+      },
+    },
+    [theme.breakpoints.up('xl')]: {
+      button_root: {
+        padding: theme.spacing(1.5, 10),
+      },
+      button_label: {
+        ...theme.typography.h3,
+      },
+    },
+  })
+);
 
-function XLargeButton(props: IXLargeButtonProps) {
+const XLargeButton = forwardRef((props: IXLargeButtonProps, ref: ForwardedRef<HTMLButtonElement>) => {
   let {classes, ...buttonProps} = props;
-  classes = { ...useStyles(), ...classes };
+  classes = {...useStyles(), ...classes};
 
   return (
     <Button
@@ -47,10 +46,10 @@ function XLargeButton(props: IXLargeButtonProps) {
       }}
       variant={'contained'}
       size={'large'}
-      component={RouterLink}
+      ref={ref}
       {...buttonProps}
     />
   );
-}
+});
 
 export default memo(XLargeButton);
