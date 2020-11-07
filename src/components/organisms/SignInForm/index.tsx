@@ -3,7 +3,7 @@ import Avatar from '@material-ui/core/Avatar/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import LockOpenOutlinedIcon from '@material-ui/icons/LockOpenOutlined';
 import classNames from 'classnames';
 import {Formik} from 'formik';
 import React, {memo, useCallback} from 'react';
@@ -12,11 +12,11 @@ import Link from '../../atoms/NextLink';
 import useStyles from './styles';
 import * as utils from './utils';
 
-export interface ISignUpFormProps {
+export interface ISignInFormProps {
   classes?: Partial<ReturnType<typeof useStyles>>;
 }
 
-function SignUpForm(props: ISignUpFormProps) {
+function SignInForm(props: ISignInFormProps) {
   let {classes} = props;
   classes = {...useStyles(), ...classes};
 
@@ -32,9 +32,9 @@ function SignUpForm(props: ISignUpFormProps) {
       <div className={classes.formWrapper}>
         <div className={classes.formHeader}>
           <Avatar className={classes.securityIcon}>
-            <AccountCircleOutlinedIcon />
+            <LockOpenOutlinedIcon />
           </Avatar>
-          <Typography variant={'h5'}>Sign up</Typography>
+          <Typography variant={'h5'}>Sign in</Typography>
         </div>
 
         <Formik
@@ -94,13 +94,13 @@ function SignUpForm(props: ISignUpFormProps) {
                   text: classes?.submitBtn_label,
                 }}
               >
-                Create account
+                Log in
               </Button>
 
               <div className={classes?.linksWrapper}>
-                <Link href={'/login'} align={'center'} className={classes?.link}>
-                  Already have an account? <br />
-                  Sign in
+                <Link href={'/register'} align={'center'} className={classes?.link}>
+                  Don't have an account yet? <br />
+                  Sign up
                 </Link>
               </div>
             </form>
@@ -111,4 +111,4 @@ function SignUpForm(props: ISignUpFormProps) {
   );
 }
 
-export default memo(SignUpForm);
+export default memo(SignInForm);
