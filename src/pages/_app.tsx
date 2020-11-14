@@ -3,6 +3,7 @@ import '../assets/scss/global.scss';
 import {useMediaQuery} from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {ThemeProvider} from '@material-ui/styles';
+import {Provider as AuthProvider} from 'next-auth/client';
 import {AppProps} from 'next/app';
 import Head from 'next/head';
 import React from 'react';
@@ -23,11 +24,13 @@ function App({Component: Page, pageProps}: AppProps) {
         <meta name='description' content='Śledź swoje postępy gdziekolwiek jesteś' />
       </Head>
       <CssBaseline />
-      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-        <MainFrame>
-          <Page {...pageProps} />
-        </MainFrame>
-      </ThemeProvider>
+      <AuthProvider session={pageProps.session}>
+        <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+          <MainFrame>
+            <Page {...pageProps} />
+          </MainFrame>
+        </ThemeProvider>
+      </AuthProvider>
     </>
   );
 }

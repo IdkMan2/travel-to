@@ -7,7 +7,7 @@ const validationSchema = yup
   .strict(true)
   .shape({
     email: yup.string().trim().email().max(255).required(),
-    password: yup.string().trim().min(8).max(255).matches(passwordRegex, 'password is not strong enough').required(),
+    password: yup.string().trim().min(8).max(255).required(),
   });
 
 export {initialValues, passwordRegex, validationSchema};

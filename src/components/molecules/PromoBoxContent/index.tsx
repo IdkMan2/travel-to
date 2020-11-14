@@ -5,15 +5,15 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Link, {LinkProps} from 'next/link';
 import React, {ComponentProps, memo} from 'react';
 
-import XLargeButton from '../../atoms/XLargeButton';
+import XLargeButton, {IXLargeButtonProps} from '../../atoms/XLargeButton';
 
 export interface IPromoBoxContentProps {
   title: string | string[];
   buttonTitle: string;
   classes?: Partial<ReturnType<typeof useStyles>>;
   TypographyProps?: ComponentProps<typeof Typography>;
+  XLargeButtonProps?: IXLargeButtonProps;
   LinkProps?: LinkProps;
-  XLargeButtonProps?: Omit<ComponentProps<typeof XLargeButton>, 'to'> & Partial<Pick<LinkProps, 'href'>>;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -55,7 +55,7 @@ function PromoBoxContent(props: IPromoBoxContentProps) {
         </Typography>
       ))}
 
-      <Link href={'/'} {...LinkProps}>
+      <Link href={'/register'} {...LinkProps}>
         <XLargeButton color={'secondary'} className={classes.heroBtn} {...XLargeButtonProps}>
           {buttonTitle}
         </XLargeButton>

@@ -53,9 +53,6 @@ function PromoSection() {
             classes={{
               root: classes.videoBoxContent_root,
             }}
-            LinkProps={{
-              href: '/register',
-            }}
           />
         </VideoBox>
       ) : (

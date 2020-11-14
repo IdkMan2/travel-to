@@ -1,9 +1,9 @@
+import {IWithUnprotectedAccessProps, withUnprotectedAccess} from '@ad-hocs/withUnprotectedAccess';
+import AcrylicBackground from '@components/atoms/AcrylicBackground';
+import SignInForm from '@components/organisms/SignInForm';
 import {Theme} from '@material-ui/core';
 import {createStyles, makeStyles} from '@material-ui/styles';
 import React, {memo} from 'react';
-
-import AcrylicBackground from '../../components/atoms/AcrylicBackground';
-import SignInForm from '../../components/organisms/SignInForm';
 
 const useStyles = makeStyles((_theme: Theme) =>
   createStyles({
@@ -19,7 +19,7 @@ const useStyles = makeStyles((_theme: Theme) =>
   })
 );
 
-function Login() {
+function Login(_props: IWithUnprotectedAccessProps) {
   const classes = useStyles();
 
   return (
@@ -31,4 +31,4 @@ function Login() {
   );
 }
 
-export default memo(Login);
+export default memo(withUnprotectedAccess(Login));

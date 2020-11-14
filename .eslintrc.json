@@ -27,6 +27,7 @@
   ],
   "rules": {
     "prettier/prettier": ["warn"], // Fix for prettier & eslint - by defailt it throws erros instead of warns
+    "space-before-function-paren": "off",
     "simple-import-sort/sort": "warn", // rule from plugin 'simple-import-sort'
     "sort-imports": "off", // rule turned off to not conflict with 'simple-import-sort/sort'
     "import/order": "off", // rule turned off to not conflict with 'simple-import-sort/sort'

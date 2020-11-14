@@ -22,10 +22,23 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "baseUrl": "./src",
+    "paths": {
+      "@ad-hocs/*": ["ad-hocs/*"],
+      "@assets/*": ["assets/*"],
+      "@components/*": ["components/*"],
+      "@contexts/*": ["contexts/*"],
+      "@hooks/*": ["hooks/*"],
+      "@models/*": ["models/*"],
+      "@pages/*": ["pages/*"],
+      "@render-props/*": ["render-props/*"],
+      "@utils/*": ["utils/*"],
+      "@server/*": ["server/*"]
+    }
   },
   "include": [
-    "types/next-env.d.ts",
+    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
   ],
