@@ -1,31 +1,33 @@
 import {Paper} from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar/Avatar';
 import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import Alert from '@material-ui/lab/Alert/Alert';
 import classNames from 'classnames';
 import {Formik} from 'formik';
-import React, {memo, useCallback} from 'react';
+import {FormikHelpers, FormikProps} from 'formik/dist/types';
+import React, {memo, useCallback, useRef} from 'react';
 
 import Link from '../../atoms/NextLink';
 import useStyles from './styles';
 import * as utils from './utils';
 
 export interface ISignUpFormProps {
+  onSubmit: (values: typeof utils.initialValues, helpers: FormikHelpers<typeof utils.initialValues>) => Promise<void>;
   classes?: Partial<ReturnType<typeof useStyles>>;
 }
 
 function SignUpForm(props: ISignUpFormProps) {
-  let {classes} = props;
+  let {classes, onSubmit: onFormSubmit} = props;
+  const formikRef = useRef<FormikProps<typeof utils.initialValues>>(null);
   classes = {...useStyles(), ...classes};
 
-  const validateForm = useCallback(
-    async (/*values: typeof initialValues*/) => {
-      return true;
-    },
-    []
-  );
+  const handleSnackbarClose = useCallback(() => {
+    formikRef.current && formikRef.current.setStatus();
+  }, [formikRef]);
 
   return (
     <Paper className={classes.paper} elevation={10}>
@@ -39,11 +41,9 @@ function SignUpForm(props: ISignUpFormProps) {
 
         <Formik
           initialValues={utils.initialValues}
-          validate={validateForm}
           validationSchema={utils.validationSchema}
-          onSubmit={(values, {setSubmitting}) => {
-            setSubmitting(false);
-          }}
+          onSubmit={onFormSubmit}
+          innerRef={formikRef}
         >
           {({
             values,
@@ -53,6 +53,7 @@ function SignUpForm(props: ISignUpFormProps) {
             handleBlur,
             handleSubmit,
             isSubmitting,
+            status,
             /* and other goodies */
           }) => (
             <form onSubmit={handleSubmit} className={classes?.form}>
@@ -103,6 +104,12 @@ function SignUpForm(props: ISignUpFormProps) {
                   Sign in
                 </Link>
               </div>
+
+              <Snackbar open={status === 'error'} autoHideDuration={6000} onClose={handleSnackbarClose}>
+                <Alert onClose={handleSnackbarClose} severity='error'>
+                  There was an unknown error ⚡
+                </Alert>
+              </Snackbar>
             </form>
           )}
         </Formik>
