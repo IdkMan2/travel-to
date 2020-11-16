@@ -1,5 +1,5 @@
-import isValidationError from '@utils/guards/isValidationError';
+import {ValidationError} from 'yup';
 
 export function getValidationErrorMessage(e: unknown): string {
-  return isValidationError(e) ? e.message : 'unknown valiation error';
+  return e instanceof ValidationError ? e.message : 'unknown valiation error';
 }

@@ -25,16 +25,10 @@
     "jsx": "preserve",
     "baseUrl": "./src",
     "paths": {
-      "@ad-hocs/*": ["ad-hocs/*"],
-      "@assets/*": ["assets/*"],
-      "@components/*": ["components/*"],
-      "@contexts/*": ["contexts/*"],
-      "@hooks/*": ["hooks/*"],
-      "@models/*": ["models/*"],
       "@pages/*": ["pages/*"],
-      "@render-props/*": ["render-props/*"],
-      "@utils/*": ["utils/*"],
-      "@server/*": ["server/*"]
+      "@client/*": ["client/*"],
+      "@server/*": ["server/*"],
+      "@utils/*": ["utils/*"]
     }
   },
   "include": [

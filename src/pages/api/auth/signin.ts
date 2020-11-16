@@ -1,7 +1,7 @@
-import {validationSchema} from '@client/components/organisms/SignUpForm/utils';
+import {validationSchema} from '@client/components/organisms/SignInForm/utils';
 import commonConfiguration from '@server/configuration/common';
 import User from '@server/models/User';
-import SignUpErrorCode from '@utils/enums/SignUpErrorCode';
+import SignInErrorCode from '@utils/enums/SignInErrorCode';
 import {getValidationErrorMessage} from '@utils/validation-utils';
 import {NextApiRequest, NextApiResponse} from 'next';
 import nextConnect from 'next-connect';
@@ -16,26 +16,35 @@ const handler = nextConnect<NextApiRequest, NextApiResponse>()
     } catch (e: unknown) {
       res.status(400).json({
         error: {
-          code: SignUpErrorCode.INVALID_INPUT,
-          message: 'Invalid sign-up input: ' + getValidationErrorMessage(e),
+          code: SignInErrorCode.INVALID_INPUT,
+          message: 'Invalid sign-in input: ' + getValidationErrorMessage(e),
         },
       });
       return;
     }
 
-    let user = await User.getByEmail(email);
+    const user = await User.getByEmail(email);
 
-    if (user !== null) {
+    if (user === null) {
       res.status(400).json({
         error: {
-          code: SignUpErrorCode.EMAIL_ALREADY_TAKEN,
-          message: 'Email address is already registered in system.',
+          code: SignInErrorCode.EMAIL_NOT_FOUND,
+          message: 'No account exists with specified email address.',
         },
       });
       return;
     }
 
-    user = await User.createNew({email, password});
+    const isValidPassword = await user.verifyPassword(password);
+    if (!isValidPassword) {
+      res.status(400).json({
+        error: {
+          code: SignInErrorCode.INVALID_PASSWORD,
+          message: 'Provided password is invalid.',
+        },
+      });
+      return;
+    }
 
     res.json({
       user: {
