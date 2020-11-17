@@ -1,14 +1,13 @@
-import {IWithProtectedAccessProps, withProtectedAccess} from '@client/ad-hocs/withProtectedAccess';
-import {Typography} from '@material-ui/core';
+import {withProtectedAccess} from '@client/ad-hocs/withProtectedAccess';
+import StartView from '@client/components/organisms/StartView';
+import Dashboard from '@client/components/templates/Dashboard';
 import React, {memo} from 'react';
 
-type HomeProps = IWithProtectedAccessProps;
-
-function Home(_props: HomeProps) {
+function Home() {
   return (
-    <div>
-      <Typography variant={'h2'}>Home</Typography>
-    </div>
+    <Dashboard>
+      <StartView />
+    </Dashboard>
   );
 }
 

@@ -58,7 +58,7 @@ function Login() {
   );
 
   return (
-    <AcrylicBackground imageSource={'/assets/images/png/sign-in-background.png'}>
+    <AcrylicBackground imageSource={'/assets/images/backgrounds/sign-in-background.png'}>
       <div className={classes.formWrapper}>
         <SignInForm onSubmit={onSubmit} />
       </div>

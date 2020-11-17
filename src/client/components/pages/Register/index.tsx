@@ -54,7 +54,7 @@ function Register() {
   );
 
   return (
-    <AcrylicBackground imageSource={'/assets/images/png/sign-up-background.png'}>
+    <AcrylicBackground imageSource={'/assets/images/backgrounds/sign-up-background.png'}>
       <div className={classes.formWrapper}>
         <SignUpForm onSubmit={onSubmit} />
       </div>

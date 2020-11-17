@@ -7,7 +7,7 @@ import PostcardBox from '../../molecules/PostcardBox';
 import PromoBoxContent from '../../molecules/PromoBoxContent';
 import VideoBox from '../../molecules/VideoBox';
 
-const useStyles = makeStyles((_theme: Theme) =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       position: 'fixed',
@@ -28,8 +28,11 @@ const useStyles = makeStyles((_theme: Theme) =>
       margin: '0 0 0 10%',
     },
     postcardBoxContent_root: {
-      margin: '0 24px',
-      transform: 'translateY(-100%)',
+      marginLeft: 36,
+      transform: 'translateY(-35%)',
+      [theme.breakpoints.up('sm')]: {
+        marginLeft: 72,
+      },
     },
   })
 );
@@ -57,7 +60,7 @@ function PromoSection() {
         </VideoBox>
       ) : (
         <PostcardBox
-          source={'/assets/images/png/promo-postcard.png'}
+          source={'/assets/images/backgrounds/promo-postcard.png'}
           classes={{
             root: classes.videoBox_root,
           }}

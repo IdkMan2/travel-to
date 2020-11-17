@@ -30,10 +30,10 @@ const useStyles = makeStyles((theme: Theme) =>
     textField_root: {
       '& input:-webkit-autofill': {
         '-webkit-text-fill-color': theme.palette.text.primary,
-        transition: 'background-color 5000s ease-in-out 0s',
+        transition: 'backgrounds-color 5000s ease-in-out 0s',
         '&:hover, &:focus, &:active': {
           '-webkit-text-fill-color': theme.palette.text.primary,
-          transition: 'background-color 5000s ease-in-out 0s',
+          transition: 'backgrounds-color 5000s ease-in-out 0s',
         },
       },
     },
