@@ -1,4 +1,5 @@
 import {ModalProps, Theme} from '@material-ui/core';
+import Link from '@material-ui/core/Link';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -9,6 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {AddCircleOutline, Explore} from '@material-ui/icons';
 import {createStyles, useTheme} from '@material-ui/styles';
+import NextLink from 'next/link';
 import React, {memo} from 'react';
 
 export interface IAppDrawerProps {
@@ -52,22 +54,30 @@ function AppDrawer(props: IAppDrawerProps) {
         paper: classes.drawer_paper,
       }}
     >
-      <Toolbar />
+      <Toolbar /> {/* Invisible toolbar component - just to make space with the same width as a real toolbar */}
       <div className={classes.drawerContainer}>
         <List>
-          <ListItem button key={0}>
-            <ListItemIcon>
-              <AddCircleOutline />
-            </ListItemIcon>
-            <ListItemText primary={'Add new journey'} />
-          </ListItem>
+          <NextLink href={'/home/new-journey'} passHref key={0}>
+            <Link color={'textSecondary'}>
+              <ListItem button>
+                <ListItemIcon>
+                  <AddCircleOutline />
+                </ListItemIcon>
+                <ListItemText primary={'Add new journey'} />
+              </ListItem>
+            </Link>
+          </NextLink>
 
-          <ListItem button key={1}>
-            <ListItemIcon>
-              <Explore />
-            </ListItemIcon>
-            <ListItemText primary={'My journeys'} />
-          </ListItem>
+          <NextLink href={'/home/journeys-history'} passHref key={1}>
+            <Link color={'textSecondary'}>
+              <ListItem button>
+                <ListItemIcon>
+                  <Explore />
+                </ListItemIcon>
+                <ListItemText primary={'My journeys'} />
+              </ListItem>
+            </Link>
+          </NextLink>
         </List>
       </div>
     </SwipeableDrawer>

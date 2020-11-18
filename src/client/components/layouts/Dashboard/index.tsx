@@ -1,3 +1,4 @@
+import {withProtectedAccess} from '@client/ad-hocs/withProtectedAccess';
 import AppDrawer, {DRAWER_WIDTH} from '@client/components/molecules/AppDrawer';
 import TopBar from '@client/components/molecules/TopBar';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
@@ -57,4 +58,4 @@ function Dashboard(props: IDashboardProps) {
   );
 }
 
-export default memo(Dashboard);
+export default withProtectedAccess(memo(Dashboard));

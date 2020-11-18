@@ -48,7 +48,6 @@ export default class User {
   public async revokeToken(token: string) {
     await revokeJwtToken(token);
   }
-
   public async verifyPassword(password: string): Promise<boolean> {
     return await verifyPassword(password, this.hash);
   }

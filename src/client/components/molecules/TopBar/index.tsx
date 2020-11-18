@@ -2,13 +2,13 @@ import ProfileMenu from '@client/components/molecules/ProfileMenu';
 import {Theme} from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
-import MLink from '@material-ui/core/Link';
+import Link from '@material-ui/core/Link';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
 import SettingsIcon from '@material-ui/icons/Settings';
 import {createStyles} from '@material-ui/styles';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import React, {memo} from 'react';
 
 export interface ITopBarProps {
@@ -62,11 +62,11 @@ function TopBar(props: ITopBarProps) {
           >
             <MenuIcon />
           </IconButton>
-          <Link href={'/'} passHref>
-            <MLink variant={'h6'} noWrap color={'inherit'}>
+          <NextLink href={'/home'} passHref>
+            <Link variant={'h6'} noWrap color={'inherit'}>
               {title}
-            </MLink>
-          </Link>
+            </Link>
+          </NextLink>
           <div className={classes.middleSpacer} />
           <IconButton
             aria-label={'account of current user'}
