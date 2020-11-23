@@ -1,16 +1,12 @@
-const { PHASE_DEVELOPMENT_SERVER } = require('next/constants');
+const { PHASE_PRODUCTION_BUILD } = require('next/constants');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const withBundleAnalyzer = require('@next/bundle-analyzer');
+const withPlugins = require('next-compose-plugins');
 
-module.exports = (phase, { defaultConfig }) => {
-  const isDevelopment = phase === PHASE_DEVELOPMENT_SERVER;
+const config = {
+  pageExtensions: ['tsx', 'ts'],
+  webpack(webpackConfig, {dev: isDevelopment}) {
 
-  const config = {
-    ...defaultConfig,
-    pageExtensions: ['tsx', 'ts'],
-  };
-
-  config.webpack = (webpackConfig) => {
     if(isDevelopment) {
       webpackConfig.plugins.push(
         new ESLintPlugin({
@@ -20,7 +16,9 @@ module.exports = (phase, { defaultConfig }) => {
     }
 
     return webpackConfig;
-  };
+  },
+};
 
-  return withBundleAnalyzer({enabled: !isDevelopment})(defaultConfig);
-}
+module.exports = withPlugins([
+  [withBundleAnalyzer, {enabled: true}, [PHASE_PRODUCTION_BUILD]],
+], config);

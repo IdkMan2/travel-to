@@ -1,3 +1,4 @@
+import MenuItemWithLink from '@client/components/atoms/MenuItemWithLink';
 import LogoutDialog from '@client/components/molecules/LogoutDialog';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -43,13 +44,13 @@ function ProfileMenu(props: IProfileMenuProps) {
           horizontal: 'center',
         }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItemWithLink href={'/home/my-account'} onClick={handleClose} button key={0}>
           <ListItemIcon>
             <AccountIcon fontSize={'small'} />
           </ListItemIcon>
           <ListItemText primary={'My account'} />
-        </MenuItem>
-        <MenuItem onClick={handleLogoutClick}>
+        </MenuItemWithLink>
+        <MenuItem onClick={handleLogoutClick} button key={1}>
           <ListItemIcon>
             <LogoutIcon fontSize={'small'} />
           </ListItemIcon>
