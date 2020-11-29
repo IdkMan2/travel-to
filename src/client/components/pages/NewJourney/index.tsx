@@ -48,7 +48,11 @@ function NewJourney() {
       <Grid item>
         <Paper className={classes.paper}>
           <MuiPickersUtilsProvider utils={DateFnsUtils} locale={plLocale}>
-            <Formik initialValues={utils.initialValues} onSubmit={handleSubmit}>
+            <Formik
+              initialValues={utils.initialValues}
+              validationSchema={utils.validationSchema}
+              onSubmit={handleSubmit}
+            >
               {(formik) => (
                 <form onSubmit={formik.handleSubmit}>
                   <Header />

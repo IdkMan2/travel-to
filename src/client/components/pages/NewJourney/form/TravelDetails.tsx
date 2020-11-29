@@ -27,6 +27,7 @@ function TravelDetails() {
         name={'kmTraveled'}
         type={'number'}
         fullWidth
+        required
         InputLabelProps={{shrink: true}}
         className={classes.field}
         InputProps={{
@@ -36,6 +37,7 @@ function TravelDetails() {
             </InputAdornment>
           ),
           endAdornment: <InputAdornment position='start'>km</InputAdornment>,
+          min: 0,
         }}
       />
     </FullWidthFormLayout>

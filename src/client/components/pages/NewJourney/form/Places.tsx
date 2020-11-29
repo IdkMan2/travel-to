@@ -16,6 +16,7 @@ function Places() {
         fullWidth
         InputLabelProps={{shrink: true}}
         placeholder={'Where do we start?'}
+        required
         InputProps={{
           startAdornment: (
             <InputAdornment position='start'>
@@ -31,6 +32,7 @@ function Places() {
         fullWidth
         InputLabelProps={{shrink: true}}
         placeholder={'Where are we heading?'}
+        required
         InputProps={{
           startAdornment: (
             <InputAdornment position='start'>

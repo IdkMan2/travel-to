@@ -7,6 +7,7 @@ import {DatePicker} from 'formik-material-ui-pickers';
 import React, {memo, useEffect, useMemo} from 'react';
 
 import * as utils from '../utils';
+import {IValues} from '../utils';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -18,7 +19,7 @@ const useStyles = makeStyles(() =>
 
 function Dates() {
   const classes = useStyles();
-  const formik = useFormikContext<typeof utils.initialValues>();
+  const formik = useFormikContext<IValues>();
   const dates: [startDate: Date, endDate: Date] = useMemo(() => {
     return [formik.values.startDate, formik.values.endDate];
   }, [formik]);
@@ -37,6 +38,7 @@ function Dates() {
           component={DatePicker}
           label={'Start date'}
           name={'startDate'}
+          required
           allowKeyboardControl={false}
           inputProps={{
             style: {
@@ -62,6 +64,7 @@ function Dates() {
           label={'End date'}
           name={'endDate'}
           minDate={dates[0]}
+          required
           allowKeyboardControl={false}
           inputProps={{
             style: {

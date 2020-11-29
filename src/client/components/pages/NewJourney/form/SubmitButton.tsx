@@ -3,7 +3,7 @@ import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import {useFormikContext} from 'formik';
 import React, {memo} from 'react';
 
-import * as utils from '../utils';
+import {IValues} from '../utils';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function SubmitButton() {
-  const {isSubmitting} = useFormikContext<typeof utils.initialValues>();
+  const {isSubmitting} = useFormikContext<IValues>();
   const classes = useStyles();
 
   return (
