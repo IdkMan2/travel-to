@@ -1,5 +1,5 @@
 import {validationSchema} from '@client/components/organisms/SignUpForm/utils';
-import commonConfiguration from '@server/configuration/common';
+import buildConfiguration from '@server/configuration/common';
 import User from '@server/models/User';
 import SignUpErrorCode from '@utils/enums/SignUpErrorCode';
 import {getValidationErrorMessage} from '@utils/validation-utils';
@@ -7,7 +7,7 @@ import {NextApiRequest, NextApiResponse} from 'next';
 import nextConnect from 'next-connect';
 
 const handler = nextConnect<NextApiRequest, NextApiResponse>()
-  .use(commonConfiguration)
+  .use(buildConfiguration())
   .post(async (req: NextApiRequest, res: NextApiResponse) => {
     const {email, password} = req.body;
 

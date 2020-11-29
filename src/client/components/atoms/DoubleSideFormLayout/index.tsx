@@ -12,13 +12,12 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     formFieldsContainer: {
       margin: 'auto',
+      flexFlow: 'row nowrap',
     },
     formField: {
       display: 'flex',
       flexDirection: 'row',
       margin: theme.spacing(1.5, 2),
-
-      width: '100%',
 
       [theme.breakpoints.up('md')]: {
         width: `calc(50% - ${theme.spacing(4)}px)`,

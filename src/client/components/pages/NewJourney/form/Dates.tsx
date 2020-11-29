@@ -10,9 +10,6 @@ import * as utils from '../utils';
 
 const useStyles = makeStyles(() =>
   createStyles({
-    dateField: {
-      minWidth: 150,
-    },
     dateField_input_formControl: {
       cursor: 'pointer',
     },
@@ -40,7 +37,6 @@ function Dates() {
           component={DatePicker}
           label={'Start date'}
           name={'startDate'}
-          className={classes.dateField}
           allowKeyboardControl={false}
           inputProps={{
             style: {
@@ -65,7 +61,6 @@ function Dates() {
           component={DatePicker}
           label={'End date'}
           name={'endDate'}
-          className={classes.dateField}
           minDate={dates[0]}
           allowKeyboardControl={false}
           inputProps={{

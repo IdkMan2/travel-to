@@ -1,9 +1,9 @@
-import commonConfiguration from '@server/configuration/common';
+import buildConfiguration from '@server/configuration/common';
 import {NextApiRequest, NextApiResponse} from 'next';
 import nextConnect from 'next-connect';
 
 const handler = nextConnect<NextApiRequest, NextApiResponse>()
-  .use(commonConfiguration)
+  .use(buildConfiguration())
   .get((req: NextApiRequest, res: NextApiResponse) => {
     res.send('Hello world');
   });

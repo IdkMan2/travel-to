@@ -2,6 +2,7 @@ import darkTheme from '@client/assets/theme/dark';
 import lightTheme from '@client/assets/theme/light';
 import MainFrame from '@client/components/atoms/MainFrame';
 import {AuthProvider} from '@client/contexts/AuthContext';
+import {CloudinaryProvider} from '@client/contexts/CloudinaryContext';
 import IEnhancedAppProps from '@client/interfaces/IEnhancedAppProps';
 import {ILayoutComponent} from '@client/interfaces/ILayout';
 import {useMediaQuery} from '@material-ui/core';
@@ -25,15 +26,17 @@ function App({Component: Page, pageProps}: IEnhancedAppProps<{children: ReactNod
         <meta name='description' content='Śledź swoje postępy gdziekolwiek jesteś' />
       </Head>
       <CssBaseline />
-      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-        <AuthProvider>
-          <MainFrame>
-            <Layout>
-              <Page {...pageProps} />
-            </Layout>
-          </MainFrame>
-        </AuthProvider>
-      </ThemeProvider>
+      <CloudinaryProvider>
+        <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+          <AuthProvider>
+            <MainFrame>
+              <Layout>
+                <Page {...pageProps} />
+              </Layout>
+            </MainFrame>
+          </AuthProvider>
+        </ThemeProvider>
+      </CloudinaryProvider>
     </>
   );
 }

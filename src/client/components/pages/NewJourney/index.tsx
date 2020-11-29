@@ -20,7 +20,7 @@ import * as utils from './utils';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
-      padding: theme.spacing(2, 4),
+      padding: theme.spacing(2, 2),
       [theme.breakpoints.up('md')]: {
         padding: theme.spacing(3, 12),
       },

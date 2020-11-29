@@ -1,12 +1,10 @@
-import commonConfiguration from '@server/configuration/common';
+import buildConfiguration from '@server/configuration/common';
 import NextAuthorizedApiRequest from '@server/interfaces/NextAuthorizedApiRequest';
-import authMiddleware from '@server/middlewares/auth';
 import {NextApiRequest, NextApiResponse} from 'next';
 import nextConnect from 'next-connect';
 
 const handler = nextConnect<NextApiRequest, NextApiResponse>()
-  .use(commonConfiguration)
-  .use(authMiddleware)
+  .use(buildConfiguration({auth: true}))
   .post(async (req: NextAuthorizedApiRequest, res: NextApiResponse) => {
     res.json({
       user: {

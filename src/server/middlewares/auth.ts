@@ -1,10 +1,10 @@
 import {NextApiResponse} from 'next';
 import {verifyJwtToken} from '@server/mechanisms/authentication';
-import AuthorizationErrorCode from '@utils/enums/AuthorizationErrorCode';
 import IJwtPayload from '@server/interfaces/IJwtPayload';
 import User from '@server/models/User';
 import NextAuthorizedApiRequest from '@server/interfaces/NextAuthorizedApiRequest';
 import {JwtTokenVerificationException} from '@server/exceptions/JwtTokenVerificationException';
+import AuthorizationErrorCode from '@utils/enums/AuthorizationErrorCode';
 
 const bearerPrefixLength = 'Bearer '.length;
 
