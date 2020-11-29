@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="865" height="779.064">
-    <rect x="406" y="27.5" width="459" height="594" rx="38.142" fill="#f2f2f2"/>
-    <rect x="384" y=".5" width="459" height="594" rx="38.142" fill="none" stroke="#3f3d56" stroke-miterlimit="10"/>
-    <path fill="none" stroke="#3f3d56" stroke-miterlimit="10" d="M407.5 61.971h408V533.03h-408z"/>
-    <circle cx="613.5" cy="31" r="10" fill="none" stroke="#3f3d56" stroke-miterlimit="10"/>
-    <circle cx="613.5" cy="563.5" r="22" fill="none" stroke="#3f3d56" stroke-miterlimit="10"/>
+    <rect x="406" y="27.5" width="459" height="594" rx="38.142" fill="#404040"/>
+    <rect x="384" y=".5" width="459" height="594" rx="38.142" fill="none" stroke="#eeeeee" stroke-miterlimit="10"/>
+    <path fill="none" stroke="#eeeeee" stroke-miterlimit="10" d="M407.5 61.971h408V533.03h-408z"/>
+    <circle cx="613.5" cy="31" r="10" fill="none" stroke="#eeeeee" stroke-miterlimit="10"/>
+    <circle cx="613.5" cy="563.5" r="22" fill="none" stroke="#eeeeee" stroke-miterlimit="10"/>
     <path d="M600.99 113.567a67.01 67.01 0 00-67.01 67.01c0 37.008 70.201 173.507 70.201 173.507S668 217.585 668 180.577a67.01 67.01 0 00-67.01-67.01zm0 111.683a35.1 35.1 0 1135.1-35.1 35.1 35.1 0 01-35.1 35.1z" fill="#689f38"/>
     <ellipse cx="601" cy="400.5" rx="67" ry="22" fill="#689f38"/>
     <path d="M361.88 95.957a22.982 22.982 0 00-19.81 13.851c-4.953 11.974 1.425 26.04 11 34.77s21.873 13.723 33.048 20.283c15.01 8.811 28.497 21.043 36.007 36.744s8.309 35.15-.519 50.15c-8.194 13.922-23.093 22.255-37.302 29.94" fill="none" stroke="#3f3d56" stroke-miterlimit="10"/>

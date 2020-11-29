@@ -1,8 +1,10 @@
 import 'date-fns';
 
+import {withProtectedAccess} from '@client/ad-hocs/withProtectedAccess';
 import Dashboard from '@client/components/layouts/Dashboard';
 import Dates from '@client/components/pages/NewJourney/form/Dates';
 import Places from '@client/components/pages/NewJourney/form/Places';
+import SubmitButton from '@client/components/pages/NewJourney/form/SubmitButton';
 import TravelDetails from '@client/components/pages/NewJourney/form/TravelDetails';
 import DateFnsUtils from '@date-io/date-fns';
 import {Paper} from '@material-ui/core';
@@ -53,6 +55,7 @@ function NewJourney() {
                   <Dates />
                   <Places />
                   <TravelDetails />
+                  <SubmitButton />
                 </form>
               )}
             </Formik>
@@ -65,4 +68,4 @@ function NewJourney() {
 
 NewJourney.layout = Dashboard;
 
-export default NewJourney;
+export default withProtectedAccess(NewJourney);

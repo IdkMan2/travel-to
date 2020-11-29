@@ -1,6 +1,8 @@
+import {withProtectedAccess} from '@client/ad-hocs/withProtectedAccess';
 import Dashboard from '@client/components/layouts/Dashboard';
 import {Typography} from '@material-ui/core';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
+import useTheme from '@material-ui/core/styles/useTheme';
 import React from 'react';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -26,17 +28,21 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function Home() {
   const classes = useStyles();
+  const theme = useTheme();
+  const darkMode = theme.palette.type === 'dark';
+
+  const svgUri = darkMode ? '/assets/images/arts/where-we-go-dark.svg' : '/assets/images/arts/where-we-go.svg';
 
   return (
     <div className={classes.root}>
       <Typography variant={'h4'} align={'center'} color={'textPrimary'} className={classes.heroText}>
         Where do we plan to go today?
       </Typography>
-      <img alt={'Where we plan to go'} src={'/assets/images/arts/where-we-go.svg'} className={classes.art} />
+      <img alt={'Where we plan to go'} width={400} height={360} src={svgUri} className={classes.art} />
     </div>
   );
 }
 
 Home.layout = Dashboard;
 
-export default Home;
+export default withProtectedAccess(Home);

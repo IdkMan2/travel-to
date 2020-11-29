@@ -1,5 +1,6 @@
 import useAuth from '@client/hooks/useAuth';
 import {AuthState} from '@client/interfaces/IAuthData';
+import hoistNonReactStatic from 'hoist-non-react-statics';
 import {getDisplayName} from 'next/dist/next-server/lib/utils';
 import {useRouter} from 'next/router';
 import React, {ComponentType, ForwardedRef, forwardRef, useEffect} from 'react';
@@ -23,6 +24,8 @@ export function withProtectedAccess<P extends object>(WrappedComponent: Componen
   });
 
   forwardRefFunc.displayName = `withProtectedAccess(${getDisplayName(WrappedComponent)})`;
+
+  hoistNonReactStatic(forwardRefFunc, WrappedComponent);
 
   return forwardRefFunc;
 }

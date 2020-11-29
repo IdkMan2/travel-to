@@ -1,3 +1,4 @@
+import {withProtectedAccess} from '@client/ad-hocs/withProtectedAccess';
 import Dashboard from '@client/components/layouts/Dashboard';
 import {Typography} from '@material-ui/core';
 import React from 'react';
@@ -8,4 +9,4 @@ function MyAccount() {
 
 MyAccount.layout = Dashboard;
 
-export default MyAccount;
+export default withProtectedAccess(MyAccount);
