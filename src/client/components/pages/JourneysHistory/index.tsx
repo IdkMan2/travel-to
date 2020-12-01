@@ -1,12 +1,65 @@
-import {withProtectedAccess} from '@client/ad-hocs/withProtectedAccess';
 import Dashboard from '@client/components/layouts/Dashboard';
-import {Typography} from '@material-ui/core';
-import React from 'react';
+import LoadingExperience from '@client/components/pages/JourneysHistory/LoadingExperience';
+import usePrevious from '@client/hooks/usePrevious';
+import {Table} from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import {createStyles, makeStyles} from '@material-ui/core/styles';
+import TableContainer from '@material-ui/core/TableContainer';
+import React, {useCallback, useEffect, useState} from 'react';
+
+import TableBody from './table/Body';
+import ErrorAlert from './table/ErrorAlert';
+import TableHead from './table/Head';
+import useFetchJourneys from './useFetchJourneys';
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    root: {
+      position: 'relative',
+    },
+    paper: {
+      position: 'relative',
+      minHeight: 500,
+    },
+    table: {
+      minWidth: 650,
+    },
+  })
+);
 
 function JourneysHistory() {
-  return <Typography>JourneysHistory</Typography>;
+  const classes = useStyles();
+  const [loading, error, data] = useFetchJourneys();
+  const prevError = usePrevious(error);
+  const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(error !== undefined);
+
+  const handleErrorAlertClose = useCallback(() => {
+    setErrorAlertOpen(false);
+  }, [setErrorAlertOpen]);
+
+  useEffect(() => {
+    if (prevError === undefined && error !== undefined) setErrorAlertOpen(true);
+  }, [error, prevError, setErrorAlertOpen]);
+
+  return (
+    <Grid container justify={'center'} className={classes.root}>
+      <Grid item>
+        <TableContainer component={Paper} className={classes.paper}>
+          <Table className={classes.table} aria-label={'Journeys history'}>
+            <TableHead />
+            <TableBody journeys={!loading && data ? data : []} />
+          </Table>
+
+          <LoadingExperience display={loading} />
+        </TableContainer>
+
+        <ErrorAlert open={errorAlertOpen} onClose={handleErrorAlertClose} />
+      </Grid>
+    </Grid>
+  );
 }
 
 JourneysHistory.layout = Dashboard;
 
-export default withProtectedAccess(JourneysHistory);
+export default JourneysHistory;

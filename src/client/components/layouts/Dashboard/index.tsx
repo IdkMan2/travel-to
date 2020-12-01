@@ -1,6 +1,7 @@
 import {withProtectedAccess} from '@client/ad-hocs/withProtectedAccess';
 import AppDrawer, {DRAWER_WIDTH} from '@client/components/molecules/AppDrawer';
 import TopBar from '@client/components/molecules/TopBar';
+import {ILayoutComponent} from '@client/interfaces/ILayout';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import React, {memo, ReactNode, useCallback, useState} from 'react';
 
@@ -58,4 +59,4 @@ function Dashboard(props: IDashboardProps) {
   );
 }
 
-export default withProtectedAccess(memo(Dashboard));
+export default withProtectedAccess(memo(Dashboard)) as ILayoutComponent<IDashboardProps>;

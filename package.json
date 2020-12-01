@@ -6,9 +6,9 @@
   "author": "Arek N <nowyarek@gmail.com>",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
     "export": "next export",
-    "start": "next start",
+    "start": "next start -p 80",
+    "build": "next build",
     "type-check": "tsc",
     "lint": "eslint --quiet --fix '**/*.{ts,tsx}'",
     "format": "prettier --write --loglevel=warn '**/*.{ts,tsx}'"

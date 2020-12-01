@@ -1,3 +1,4 @@
+import buildConfiguration from '@server/configuration/common';
 import {BadRequestException} from '@server/exceptions/BadRequestException';
 import IImageCollection from '@server/interfaces/collections/IImageCollection';
 import IJourneyCollection from '@server/interfaces/collections/IJourneyCollection';
@@ -10,10 +11,11 @@ import Journey from '@server/models/Journey';
 import {UploadApiResponse} from 'cloudinary';
 import {Fields, File, Files, IncomingForm} from 'formidable';
 import {Db} from 'mongodb';
-import {NextApiResponse} from 'next';
+import {NextApiRequest, NextApiResponse} from 'next';
+import {NextConnect} from 'next-connect';
 import {number, object, ObjectSchema, string, ValidationError} from 'yup';
 
-const ALLOWED_IMG_UPLOAD_COUNT: number = 5;
+const ALLOWED_IMG_UPLOAD_COUNT: number = 6;
 const ALLOWED_MIME_TYPES: string[] = ['image/bmp', 'image/png', 'image/jpeg', 'image/x-xbitmap'];
 const journeyValidationSchema: ObjectSchema<Omit<IJourneyResource, 'id' | 'images'>> = object().required().shape({
   startDate: number().required().positive().integer(),
@@ -23,7 +25,16 @@ const journeyValidationSchema: ObjectSchema<Omit<IJourneyResource, 'id' | 'image
   kilometersTraveled: number().required().positive().integer(),
 });
 
-export default async function handler(req: NextAuthorizedApiRequest, res: NextApiResponse) {
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
+const handler: NextConnect<NextApiRequest, NextApiResponse> = buildConfiguration({auth: true}).post(async function (
+  req: NextAuthorizedApiRequest,
+  res: NextApiResponse
+) {
   const form = new IncomingForm();
   const {fields, files} = await new Promise<{fields: Fields; files: Files}>((resolve, reject) => {
     form.parse(req, (err, fields, files) => {
@@ -55,6 +66,7 @@ export default async function handler(req: NextAuthorizedApiRequest, res: NextAp
       abortEarly: true,
     });
   } catch (e: unknown) {
+    console.error(e);
     throw new BadRequestException(
       3,
       `Invalid form fields provided (${e instanceof ValidationError ? e.message : 'unknown validation error'}).`
@@ -62,7 +74,7 @@ export default async function handler(req: NextAuthorizedApiRequest, res: NextAp
   }
 
   const db: Db = await getMongoDb();
-  const journeysCollection = await db.collection<IJourneyCollection[number]>('journeys');
+  const journeysCollection = db.collection<IJourneyCollection[number]>('journeys');
   const results = await journeysCollection.insertOne(validatedFields);
   const journey = new Journey(results.ops[0]);
 
@@ -81,4 +93,6 @@ export default async function handler(req: NextAuthorizedApiRequest, res: NextAp
   }
 
   res.status(200).json(journey.serialize());
-}
+});
+
+export default handler;

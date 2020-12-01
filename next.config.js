@@ -20,5 +20,5 @@ const config = {
 };
 
 module.exports = withPlugins([
-  [withBundleAnalyzer, {enabled: true}, [PHASE_PRODUCTION_BUILD]],
+  [withBundleAnalyzer({enabled: true}), {}, [PHASE_PRODUCTION_BUILD]],
 ], config);

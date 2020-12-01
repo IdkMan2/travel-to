@@ -1,4 +1,3 @@
-import {withProtectedAccess} from '@client/ad-hocs/withProtectedAccess';
 import Dashboard from '@client/components/layouts/Dashboard';
 import {Typography} from '@material-ui/core';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
@@ -45,4 +44,4 @@ function Home() {
 
 Home.layout = Dashboard;
 
-export default withProtectedAccess(Home);
+export default Home;

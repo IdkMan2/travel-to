@@ -1,11 +1,12 @@
 import 'date-fns';
 
-import {withProtectedAccess} from '@client/ad-hocs/withProtectedAccess';
 import Dashboard from '@client/components/layouts/Dashboard';
 import Dates from '@client/components/pages/NewJourney/form/Dates';
 import Places from '@client/components/pages/NewJourney/form/Places';
 import SubmitButton from '@client/components/pages/NewJourney/form/SubmitButton';
 import TravelDetails from '@client/components/pages/NewJourney/form/TravelDetails';
+import DirectAPI from '@client/mechanisms/DirectAPI';
+import ErrorReporting from '@client/mechanisms/ErrorReporting';
 import DateFnsUtils from '@date-io/date-fns';
 import {Paper} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
@@ -14,10 +15,12 @@ import {MuiPickersUtilsProvider} from '@material-ui/pickers';
 import {createStyles, makeStyles} from '@material-ui/styles';
 import plLocale from 'date-fns/locale/pl';
 import {Formik} from 'formik';
+import {FormikHelpers} from 'formik/dist/types';
 import React, {useCallback} from 'react';
 
 import Header from './form/Header';
 import * as utils from './utils';
+import {IValues} from './utils';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,8 +42,22 @@ const useStyles = makeStyles((theme: Theme) =>
 function NewJourney() {
   const classes = useStyles();
 
-  const handleSubmit = useCallback((values) => {
-    alert(JSON.stringify(values, null, 2));
+  const handleSubmit = useCallback(async (values: IValues, helpers: FormikHelpers<IValues>) => {
+    try {
+      await DirectAPI.post('/journeys/new', {
+        data: {
+          ...values,
+          startDate: values.startDate.getTime() / 1000,
+          endDate: values.endDate.getTime() / 1000,
+          kilometersTraveled: values.kmTraveled,
+        },
+      });
+      //TODO: Redirect to the specified journey
+    } catch (e: unknown) {
+      ErrorReporting.captureError(e);
+      helpers.setStatus('error');
+      helpers.setSubmitting(false);
+    }
   }, []);
 
   return (
@@ -72,4 +89,4 @@ function NewJourney() {
 
 NewJourney.layout = Dashboard;
 
-export default withProtectedAccess(NewJourney);
+export default NewJourney;
