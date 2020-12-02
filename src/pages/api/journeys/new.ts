@@ -8,6 +8,7 @@ import IJourneyResource from '@server/interfaces/resources/IJourneyResource';
 import CloudinaryUploader from '@server/mechanisms/CloudinaryUploader';
 import {getMongoDb} from '@server/mechanisms/database';
 import Journey from '@server/models/Journey';
+import {ObjectId} from 'bson';
 import {UploadApiResponse} from 'cloudinary';
 import {Fields, File, Files, IncomingForm} from 'formidable';
 import {Db} from 'mongodb';
@@ -17,7 +18,8 @@ import {number, object, ObjectSchema, string, ValidationError} from 'yup';
 
 const ALLOWED_IMG_UPLOAD_COUNT: number = 6;
 const ALLOWED_MIME_TYPES: string[] = ['image/bmp', 'image/png', 'image/jpeg', 'image/x-xbitmap'];
-const journeyValidationSchema: ObjectSchema<Omit<IJourneyResource, 'id' | 'images'>> = object().required().shape({
+const journeyValidationSchema: ObjectSchema<Omit<IJourneyResource, '_id' | 'images'>> = object().required().shape({
+  userId: string().required(),
   startDate: number().required().positive().integer(),
   endDate: number().required().positive().integer(),
   startPoint: string().required(),
@@ -58,13 +60,16 @@ const handler: NextConnect<NextApiRequest, NextApiResponse> = buildConfiguration
   }
 
   // Validate form fields
-  let validatedFields;
+  let validatedFields: Omit<IJourneyResource, 'images' | '_id'>;
   try {
-    validatedFields = await journeyValidationSchema.cast(fields, {
-      strict: true,
-      stripUnknown: true,
-      abortEarly: true,
-    });
+    validatedFields = await journeyValidationSchema.cast(
+      {...fields, userId: req.auth.user.id.toHexString()},
+      {
+        strict: true,
+        stripUnknown: true,
+        abortEarly: true,
+      }
+    );
   } catch (e: unknown) {
     console.error(e);
     throw new BadRequestException(
@@ -75,7 +80,10 @@ const handler: NextConnect<NextApiRequest, NextApiResponse> = buildConfiguration
 
   const db: Db = await getMongoDb();
   const journeysCollection = db.collection<IJourneyCollection[number]>('journeys');
-  const results = await journeysCollection.insertOne(validatedFields);
+  const results = await journeysCollection.insertOne({
+    ...validatedFields,
+    userId: new ObjectId(validatedFields.userId),
+  });
   const journey = new Journey(results.ops[0]);
 
   for (const fileKey of filesKeys) {

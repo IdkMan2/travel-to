@@ -14,7 +14,7 @@ function Body(props: IBodyProps) {
   return (
     <TableBody>
       {journeys.map((journey: IJourneyResource, index: number) => (
-        <Row key={journey.id} journey={journey} index={index} />
+        <Row key={journey._id} journey={journey} index={index} />
       ))}
     </TableBody>
   );

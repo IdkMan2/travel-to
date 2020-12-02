@@ -30,7 +30,7 @@ function Row({journey, index}: IRowProps) {
   }, [journey]);
 
   const handleClick = useCallback(() => {
-    router.push('/home/journeys/' + journey.id);
+    router.push('/home/journeys/' + journey._id);
   }, [router, journey]);
 
   return (

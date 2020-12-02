@@ -1,7 +1,8 @@
 import IImageResource from '@server/interfaces/resources/IImageResource';
 
 export default interface IJourneyResource {
-  id: string;
+  _id: string;
+  userId: string;
   startDate: number;
   endDate: number;
   startPoint: string;

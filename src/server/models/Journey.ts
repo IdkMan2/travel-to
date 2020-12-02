@@ -2,11 +2,13 @@ import IJourneyCollection from '@server/interfaces/collections/IJourneyCollectio
 import IImageResource from '@server/interfaces/resources/IImageResource';
 import IJourneyResource from '@server/interfaces/resources/IJourneyResource';
 import {getMongoDb} from '@server/mechanisms/database';
+import User from '@server/models/User';
 import {ObjectId} from 'bson';
 import {Db} from 'mongodb';
 
 export default class Journey {
   public readonly id: ObjectId;
+  public userId: ObjectId;
   public startDate: number;
   public endDate: number;
   public startPoint: string;
@@ -16,6 +18,7 @@ export default class Journey {
 
   constructor(data: IJourneyCollection[number], images: IImageResource[] = []) {
     this.id = data._id;
+    this.userId = data.userId;
     this.startDate = data.startDate;
     this.endDate = data.endDate;
     this.startPoint = data.startPoint;
@@ -25,18 +28,22 @@ export default class Journey {
   }
 
   /*==================== STATIC SIDE ====================*/
-  public static async createNew(journeyResource: Omit<IJourneyResource, 'id'>): Promise<Journey> {
+  public static async createNew(
+    journeyResource: Omit<IJourneyResource, '_id' | 'userId'>,
+    createFor: User
+  ): Promise<Journey> {
     const mongoDb: Db = await getMongoDb();
     const journeysCollection = mongoDb.collection<IJourneyCollection[number]>('journeys');
-    const results = await journeysCollection.insertOne(journeyResource);
+    const results = await journeysCollection.insertOne({...journeyResource, userId: createFor.id});
     return new Journey(results.ops[0], []);
   }
 
   /*==================== INSTANCE SIDE ====================*/
   public serialize(): IJourneyResource {
-    const {id, startPoint, endPoint, startDate, endDate, kilometersTraveled, images} = this;
+    const {id, userId, startPoint, endPoint, startDate, endDate, kilometersTraveled, images} = this;
     return {
-      id: id.toHexString(),
+      _id: id.toHexString(),
+      userId: userId.toHexString(),
       startPoint,
       endPoint,
       startDate,

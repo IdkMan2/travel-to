@@ -1,5 +1,6 @@
 import buildConfiguration from '@server/configuration/common';
 import IJourneyCollection from '@server/interfaces/collections/IJourneyCollection';
+import NextAuthorizedApiRequest from '@server/interfaces/NextAuthorizedApiRequest';
 import IJourneyResource from '@server/interfaces/resources/IJourneyResource';
 import {getMongoDb} from '@server/mechanisms/database';
 import {Db} from 'mongodb';
@@ -13,21 +14,24 @@ export const config = {
 };
 
 const handler: NextConnect<NextApiRequest, NextApiResponse> = buildConfiguration({auth: true}).get(async function (
-  req: NextApiRequest,
+  req: NextAuthorizedApiRequest,
   res: NextApiResponse
 ) {
   const mongoDb: Db = await getMongoDb();
   const journeysCollection = mongoDb.collection('journeys');
-  const results = await journeysCollection.find({});
-  const allDocs: IJourneyResource[] = (await results.toArray()).map((doc: IJourneyCollection[number]) => {
-    const newDoc: IJourneyResource & Record<'_id', IJourneyCollection[number]['_id'] | undefined> = {
-      ...doc,
-      id: doc._id.toHexString(),
-      images: [], //TODO: add images to returned docs
-    };
-    delete newDoc._id;
-    return newDoc;
-  });
+  const results = await journeysCollection.find({userId: req.auth.user.id});
+  const allDocs: Omit<IJourneyResource, 'images'>[] = (await results.toArray()).map(
+    (doc: IJourneyCollection[number]) => {
+      const newDoc: Partial<Omit<IJourneyResource, 'images'>> = {
+        ...doc,
+        _id: doc._id.toHexString(),
+        userId: doc.userId.toHexString(),
+      };
+      delete newDoc._id;
+      delete newDoc.userId;
+      return newDoc as Omit<IJourneyResource, 'images'>;
+    }
+  );
   results.close();
   res.status(200).json(allDocs);
 });

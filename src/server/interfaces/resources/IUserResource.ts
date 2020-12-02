@@ -1,5 +1,5 @@
 export default interface IUserResource {
-  id: string;
+  _id: string;
   email: string;
   hash: string;
 }
