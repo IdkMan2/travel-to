@@ -27,7 +27,6 @@ const handler: NextConnect<NextApiRequest, NextApiResponse> = buildConfiguration
         _id: doc._id.toHexString(),
         userId: doc.userId.toHexString(),
       };
-      delete newDoc._id;
       delete newDoc.userId;
       return newDoc as Omit<IJourneyResource, 'images'>;
     }

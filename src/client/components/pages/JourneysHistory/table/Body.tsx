@@ -5,7 +5,7 @@ import React, {memo} from 'react';
 import Row from './Row';
 
 export interface IBodyProps {
-  journeys: IJourneyResource[];
+  journeys: Omit<IJourneyResource, 'images'>[];
 }
 
 function Body(props: IBodyProps) {
@@ -13,7 +13,7 @@ function Body(props: IBodyProps) {
 
   return (
     <TableBody>
-      {journeys.map((journey: IJourneyResource, index: number) => (
+      {journeys.map((journey: IBodyProps['journeys'][number], index: number) => (
         <Row key={journey._id} journey={journey} index={index} />
       ))}
     </TableBody>

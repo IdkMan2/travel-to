@@ -5,31 +5,32 @@ import {useEffect, useMemo, useState} from 'react';
 
 interface ILocalState {
   status: 'loading' | 'success' | 'error';
-  journeys: Omit<IJourneyResource, 'images'>[];
+  journey?: IJourneyResource;
   error?: unknown;
 }
 type ReturnType =
   | [loading: true, error: undefined, data: undefined]
   | [loading: false, error: unknown, data: undefined]
-  | [loading: false, error: undefined, data: ILocalState['journeys']];
+  | [loading: false, error: undefined, data: ILocalState['journey']];
 
-export default function useFetchJourneys(): ReturnType {
+export default function useFetchJourney(journeyId: unknown): ReturnType {
   const [state, setState] = useState<ILocalState>({
     status: 'loading',
-    journeys: [],
+    journey: undefined,
     error: undefined,
   });
 
   useEffect(() => {
+    if (typeof journeyId !== 'string') return;
     const request = axios.CancelToken.source();
 
-    if (state.status === 'loading' && state.journeys.length === 0) {
-      DirectAPI.get<ILocalState['journeys']>('/journeys', {cancelToken: request.token})
-        .then((response: AxiosResponse<ILocalState['journeys']>) => {
+    if (state.status === 'loading' && state.journey === undefined) {
+      DirectAPI.get<ILocalState['journey']>(`/journeys/${journeyId}`, {cancelToken: request.token})
+        .then((response: AxiosResponse<ILocalState['journey']>) => {
           setState({
             ...state,
             status: 'success',
-            journeys: response.data,
+            journey: response.data,
             error: undefined,
           });
         })
@@ -39,7 +40,7 @@ export default function useFetchJourneys(): ReturnType {
           setState({
             ...state,
             status: 'error',
-            journeys: [],
+            journey: undefined,
             error: e,
           });
         });
@@ -48,13 +49,13 @@ export default function useFetchJourneys(): ReturnType {
     return () => {
       request && request.cancel('USE_EFFECT_CLEANUP');
     };
-  }, [state, setState]);
+  }, [journeyId, state, setState]);
 
   return useMemo(() => {
     return [
       state.status === 'loading',
       state.status === 'error' ? state.error : undefined,
-      state.journeys,
+      state.journey,
     ] as ReturnType;
   }, [state]);
 }

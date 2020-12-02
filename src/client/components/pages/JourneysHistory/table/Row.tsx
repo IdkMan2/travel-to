@@ -7,7 +7,7 @@ import {useRouter} from 'next/router';
 import React, {memo, useCallback, useMemo} from 'react';
 
 export interface IRowProps {
-  journey: IJourneyResource;
+  journey: Omit<IJourneyResource, 'images'>;
   index: number;
 }
 

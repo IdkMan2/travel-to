@@ -1,16 +1,17 @@
+import ErrorAlert from '@client/components/atoms/ErrorAlert';
+import JourneyNotFoundInfo from '@client/components/atoms/JourneyNotFoundInfo';
+import LoadingExperience from '@client/components/atoms/LoadingExperience';
 import Dashboard, {IDashboardProps} from '@client/components/layouts/Dashboard';
 import JourneyDetailsList from '@client/components/organisms/JourneyDetailsList';
+import usePrevious from '@client/hooks/usePrevious';
 import {IComponentWithLayout} from '@client/interfaces/ILayout';
 import Grid from '@material-ui/core/Grid';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
-import IJourneyResource from '@server/interfaces/resources/IJourneyResource';
-import {NextPage} from 'next';
+import {isAxiosError} from '@utils/axios-utils';
 import {useRouter} from 'next/router';
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
-interface ILocalProps {
-  journey?: IJourneyResource;
-}
+import useFetchJourney from './useFetchJourney';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,26 +30,43 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Page: NextPage<ILocalProps> & IComponentWithLayout<IDashboardProps> = function JourneyDetails(
-  props: ILocalProps
-) {
-  const {journey} = props;
-  const router = useRouter();
+const Page: IComponentWithLayout<IDashboardProps> = function JourneyDetails() {
   const classes = useStyles();
+  const router = useRouter();
+  const journeyId = router.query.id;
+  const [loading, error, journey] = useFetchJourney(journeyId);
+  const prevError = usePrevious(error);
+  const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(error !== undefined);
 
-  // If the page is not yet generated, this will be displayed
-  // initially until getStaticProps() finishes running
-  if (router.isFallback || journey === undefined) {
-    return <div>Loading...</div>;
-  } else {
-    return (
-      <Grid container justify={'center'}>
-        <Grid item xs={12} lg={6} className={classes.gridBox}>
-          <JourneyDetailsList journey={journey} className={classes.details} />
-        </Grid>
-      </Grid>
-    );
-  }
+  const handleErrorAlertClose = useCallback(() => {
+    setErrorAlertOpen(false);
+  }, [setErrorAlertOpen]);
+
+  useEffect(() => {
+    if (prevError === undefined && error !== undefined && !(isAxiosError(error) && error.response?.status === 404))
+      setErrorAlertOpen(true);
+  }, [error, prevError, setErrorAlertOpen]);
+
+  const journeyNotFound = typeof journeyId !== 'string' || (isAxiosError(error) && error.response?.status === 404);
+
+  return (
+    <>
+      {journeyNotFound ? (
+        <JourneyNotFoundInfo id={typeof journeyId === 'string' ? journeyId : ''} />
+      ) : (
+        journey && (
+          <Grid container justify={'center'}>
+            <Grid item xs={12} lg={6} className={classes.gridBox}>
+              <JourneyDetailsList journey={journey} className={classes.details} />
+            </Grid>
+          </Grid>
+        )
+      )}
+
+      <LoadingExperience display={loading} />
+      <ErrorAlert open={errorAlertOpen} onClose={handleErrorAlertClose} />
+    </>
+  );
 };
 
 Page.layout = Dashboard;

@@ -1,5 +1,6 @@
+import ErrorAlert from '@client/components/atoms/ErrorAlert';
+import LoadingExperience from '@client/components/atoms/LoadingExperience';
 import Dashboard from '@client/components/layouts/Dashboard';
-import LoadingExperience from '@client/components/pages/JourneysHistory/LoadingExperience';
 import usePrevious from '@client/hooks/usePrevious';
 import {Table} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
@@ -9,7 +10,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import TableBody from './table/Body';
-import ErrorAlert from './table/ErrorAlert';
 import TableHead from './table/Head';
 import useFetchJourneys from './useFetchJourneys';
 
