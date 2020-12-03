@@ -16,6 +16,8 @@ import {NextApiRequest, NextApiResponse} from 'next';
 import {NextConnect} from 'next-connect';
 import {number, object, ObjectSchema, string, ValidationError} from 'yup';
 
+type MultipleFiles = Record<keyof Files, File[]>;
+
 const ALLOWED_IMG_UPLOAD_COUNT: number = 6;
 const ALLOWED_MIME_TYPES: string[] = ['image/bmp', 'image/png', 'image/jpeg', 'image/x-xbitmap'];
 const journeyValidationSchema: ObjectSchema<Omit<IJourneyResource, '_id' | 'images'>> = object().required().shape({
@@ -37,11 +39,18 @@ const handler: NextConnect<NextApiRequest, NextApiResponse> = buildConfiguration
   req: NextAuthorizedApiRequest,
   res: NextApiResponse
 ) {
-  const form = new IncomingForm();
-  const {fields, files} = await new Promise<{fields: Fields; files: Files}>((resolve, reject) => {
-    form.parse(req, (err, fields, files) => {
+  const form = new IncomingForm({});
+  form.multiples = true;
+  const {fields, files} = await new Promise<{fields: Fields; files: MultipleFiles}>((resolve, reject) => {
+    form.parse(req, (err, fields, files: Record<keyof Files, File | File[]>) => {
       if (err) reject(err);
-      else resolve({fields, files});
+
+      const filesKeys = Object.keys(files);
+      for (const key of filesKeys) {
+        files[key] = (Array.isArray(files[key]) ? files[key] : [files[key]]) as File[];
+      }
+
+      resolve({fields, files: files as MultipleFiles});
     });
   });
 
@@ -52,11 +61,13 @@ const handler: NextConnect<NextApiRequest, NextApiResponse> = buildConfiguration
 
   // Validate MIME type of files
   for (const fileKey of filesKeys) {
-    if (ALLOWED_MIME_TYPES.indexOf(files[fileKey].type) === -1)
-      throw new BadRequestException(
-        2,
-        `Received file '${fileKey}' with invalid mime type. Allowed mime types: [${ALLOWED_MIME_TYPES.join(', ')}]`
-      );
+    for (const file of files[fileKey] as File[]) {
+      if (ALLOWED_MIME_TYPES.indexOf(file.type) === -1)
+        throw new BadRequestException(
+          2,
+          `Received file '${fileKey}' with invalid mime type. Allowed mime types: [${ALLOWED_MIME_TYPES.join(', ')}]`
+        );
+    }
   }
 
   // Validate form fields
@@ -87,17 +98,18 @@ const handler: NextConnect<NextApiRequest, NextApiResponse> = buildConfiguration
   const journey = new Journey(results.ops[0]);
 
   for (const fileKey of filesKeys) {
-    const file: File = files[fileKey];
-    const uploadResult: UploadApiResponse = await CloudinaryUploader.uploadImage(file);
-    const imagesCollection = await db.collection<IImageCollection[number]>('images');
-    const results = await imagesCollection.insertOne({
-      journeyId: journey.id,
-      _id: uploadResult.asset_id,
-      publicId: uploadResult.public_id,
-      url: uploadResult.secure_url,
-    });
-    const {_id, publicId, url}: IImageResource = results.ops[0];
-    journey.images.push({_id, publicId, url});
+    for (const file of files[fileKey]) {
+      const uploadResult: UploadApiResponse = await CloudinaryUploader.uploadImage(file);
+      const imagesCollection = await db.collection<IImageCollection[number]>('images');
+      const results = await imagesCollection.insertOne({
+        journeyId: journey.id,
+        _id: uploadResult.asset_id,
+        publicId: uploadResult.public_id,
+        url: uploadResult.secure_url,
+      });
+      const {_id, publicId, url}: IImageResource = results.ops[0];
+      journey.images.push({_id, publicId, url});
+    }
   }
 
   res.status(200).json(journey.serialize());

@@ -32,6 +32,7 @@
     "formik-material-ui-pickers": "^0.0.11",
     "hoist-non-react-statics": "^3.3.2",
     "jsonwebtoken": "^8.5.1",
+    "material-ui-dropzone": "^3.5.0",
     "mongodb": "^3.6.3",
     "next": "10.0.1",
     "next-connect": "^0.9.1",

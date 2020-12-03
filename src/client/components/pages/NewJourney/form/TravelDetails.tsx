@@ -9,7 +9,6 @@ import React, {memo} from 'react';
 const useStyles = makeStyles(() =>
   createStyles({
     field: {
-      alignSelf: 'center',
       width: '50%',
     },
   })

@@ -28,3 +28,21 @@ export const validationSchema: ObjectSchema<IValues> = object()
     endPoint: string().required('This is a required field'),
     kmTraveled: number().required().integer().positive("Field 'Kilometers traveled' requires a positive number."),
   });
+
+export function prepareFormData(values: IValues, files: File[]): FormData {
+  const formData = new FormData();
+  const valuesKeys = Object.keys(values) as Array<keyof IValues>;
+  for (const key of valuesKeys) {
+    formData.append(key, values[key].toString());
+  }
+
+  formData.append('startDate', (values.startDate.getTime() / 1000).toString());
+  formData.append('endDate', (values.endDate.getTime() / 1000).toString());
+  formData.append('kilometersTraveled', values.kmTraveled.toString());
+
+  for (const file of files) {
+    formData.append('images', file);
+  }
+
+  return formData;
+}
