@@ -21,6 +21,8 @@ const useStyles = makeStyles(() =>
     paper: {
       position: 'relative',
       minHeight: 500,
+      maxWidth: '100vw',
+      overflow: 'scroll',
     },
     table: {
       minWidth: 650,

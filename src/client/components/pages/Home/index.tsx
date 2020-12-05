@@ -7,20 +7,19 @@ import React from 'react';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: '100%',
-      height: '100%',
       display: 'flex',
       flexFlow: 'column nowrap',
       justifyContent: 'center',
       alignItems: 'center',
-      marginBottom: '10%',
     },
     heroText: {
       marginBottom: theme.spacing(4),
     },
     art: {
-      width: '100%',
+      display: 'inline',
       maxWidth: 400,
+      height: '100%',
+      width: '100%',
     },
   })
 );

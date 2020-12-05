@@ -12,19 +12,25 @@ export interface IDashboardProps {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
+      position: 'relative',
       display: 'flex',
       flexFlow: 'column nowrap',
-      padding: theme.spacing(2, 2),
+      left: 0,
+      width: '100%',
+      minHeight: '100vh',
+      paddingTop: (theme.mixins.toolbar.minHeight as number) + theme.spacing(2),
+      paddingBottom: theme.spacing(4),
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
       [theme.breakpoints.up('md')]: {
         left: DRAWER_WIDTH,
+        width: `calc(100% - ${DRAWER_WIDTH}px)`,
+        paddingTop: (theme.mixins.toolbar.minHeight as number) + theme.spacing(4),
+        paddingBottom: theme.spacing(8),
+        paddingLeft: theme.spacing(4),
+        paddingRight: theme.spacing(4),
       },
     },
-    appbarSpacer: theme.mixins.toolbar,
   })
 );
 
@@ -51,10 +57,7 @@ function Dashboard(props: IDashboardProps) {
     <>
       <TopBar title={'Your travels'} toggleDrawer={onDrawerToggle} />
       <AppDrawer open={drawerOpen} onOpen={onDrawerOpen} onClose={onDrawerClose} />
-      <div className={classes.root}>
-        <div className={classes.appbarSpacer} />
-        {children}
-      </div>
+      <div className={classes.root}>{children}</div>
     </>
   );
 }
