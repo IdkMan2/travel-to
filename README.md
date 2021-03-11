@@ -2,6 +2,8 @@
 
 ![Next.js](https://img.shields.io/badge/Next.js-blueviolet?style=for-the-badge)
 ![TypeScript](https://img.shields.io/badge/TypeScript-blue?style=for-the-badge)
+![MongoDB](https://img.shields.io/badge/MongoDB-brightgreen?style=for-the-badge)
+![Cloudinary](https://img.shields.io/badge/Cloudinary-9cf?style=for-the-badge)
 
 Project requires configured `MongoDB` and `Cloudinary`.
 
