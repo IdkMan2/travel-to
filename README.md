@@ -1,55 +1,31 @@
 # Travel-To
 
-========== GENERAL ==========
+![Next.js](https://img.shields.io/badge/Next.js-blueviolet?style=for-the-badge)
+![TypeScript](https://img.shields.io/badge/TypeScript-blue?style=for-the-badge)
 
-NextAuth secret:
+Project requires configured MongoDB and Cloudinary.
+
 ```text
-41dW6luMVMrwOBcl
+# random string, just for passwords hashing
+AUTH_SECRET=
+# host and port of web server, for local development it's localhost:3000
+NEXT_PUBLIC_BACK_END_URI=
+# MongoDB
+DB_NAME=
+MONGODB_URI=
+# Cloudinary
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
 ```
 
-========== MONGO-DB ==========
-
-Atlas account:
-```text
-a_nurzynski@poczta.wwsi.edu.pl / Technologie-edu-23
-```
-
-DB account:
-```text
-root / Technologie-edu-23
-```
-
-App connection string:
-```text
-mongodb+srv://root:Technologie-edu-23@main.iloye.mongodb.net/<dbname>?retryWrites=true&w=majority
-```
-
-Compass connection string:
-```text
-mongodb+srv://root:Technologie-edu-23@main.iloye.mongodb.net/test
-```
-
-========== CLOUDINARY ==========
-Cloudinary account:
-```text
-a_nurzynski@poczta.wwsi.edu.pl / Technologie-edu-23
-```
-
-Cloud name: travel-to
-```text
-API Key: 119987291345389
-API Secret: 8bDQBiSUTJvf9V_fD3dtratGkHY
-Env variable: cloudinary://119987291345389:8bDQBiSUTJvf9V_fD3dtratGkHY@wwsi
-```
-
-
-![](./screenshots/Desktop-1.png)
-![](./screenshots/Desktop-2.png)
-![](./screenshots/Desktop-3.png)
-![](./screenshots/Desktop-4.png)
-![](./screenshots/Desktop-5.png)
-![](./screenshots/Desktop-6.png)
-![](./screenshots/Desktop-7.png)
-![](./screenshots/Desktop-Dark-1.png)
-![](./screenshots/Mobile-1.png)
-![](./screenshots/Mobile-2.png)
+<img src="screenshots/Desktop-1.png" alt="Desktop screenshot 1" width="800px" />
+<img src="screenshots/Desktop-2.png" alt="Desktop screenshot 2" width="800px" />
+<img src="screenshots/Desktop-3.png" alt="Desktop screenshot 3" width="800px" />
+<img src="screenshots/Desktop-4.png" alt="Desktop screenshot 4" width="800px" />
+<img src="screenshots/Desktop-5.png" alt="Desktop screenshot 5" width="800px" />
+<img src="screenshots/Desktop-6.png" alt="Desktop screenshot 6" width="800px" />
+<img src="screenshots/Desktop-7.png" alt="Desktop screenshot 7" width="800px" />
+<img src="screenshots/Desktop-Dark-1.png" alt="Desktop dark screenshot 1" width="800px" />
+<img src="screenshots/Mobile-1.png" alt="Mobile screenshot 1" width="400px" />
+<img src="screenshots/Mobile-2.png" alt="Mobile screenshot 2" width="400px" />
