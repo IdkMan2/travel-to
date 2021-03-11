@@ -3,17 +3,20 @@
 ![Next.js](https://img.shields.io/badge/Next.js-blueviolet?style=for-the-badge)
 ![TypeScript](https://img.shields.io/badge/TypeScript-blue?style=for-the-badge)
 
-Project requires configured MongoDB and Cloudinary.
+Project requires configured `MongoDB` and `Cloudinary`.
 
 ```text
-# random string, just for passwords hashing
+# Random string, just for passwords hashing
 AUTH_SECRET=
+
 # host and port of web server, for local development it's localhost:3000
 NEXT_PUBLIC_BACK_END_URI=
-# MongoDB
+
+# MongoDB configuration
 DB_NAME=
 MONGODB_URI=
-# Cloudinary
+
+# Cloudinary configuration
 CLOUDINARY_CLOUD_NAME=
 CLOUDINARY_API_KEY=
 CLOUDINARY_API_SECRET=
